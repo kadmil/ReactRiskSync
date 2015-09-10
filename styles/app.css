@@ -1,0 +1,10 @@
+@import "./Utils/*.css";
+
+*,*:before, *:after {
+  box-sizing: border-box;
+  font-family: 'Noto Serif';
+}
+
+body {
+  margin: 0;
+}

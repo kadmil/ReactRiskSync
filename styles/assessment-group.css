@@ -1,0 +1,19 @@
+@import "./Utils/*.css";
+
+.assessment-group {
+  display: flex;
+  font-size: 16px;
+  .assessment-group-label {
+    padding: 6px 12px;
+    @mixin main-flex;
+    justify-content: center;
+    text-align: center;
+  }
+  margin-bottom: 30px;
+  &>div {
+    flex: 1;
+  }
+  >:nth-child(4n), >:nth-child(4n+3){
+    flex: 2;
+  }
+}

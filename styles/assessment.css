@@ -1,0 +1,6 @@
+@import "./Utils/*.css";
+
+.assessment {
+  margin: 30px;
+  margin-top: 130px;
+}

@@ -1,0 +1,1 @@
+export const ButtonStates = ['success', 'warning', 'danger']

@@ -1,0 +1,7 @@
+@import "./Utils/*.css";
+
+.footer {
+  @mixin flex-center;
+  min-height: 40px;
+  margin-top: 30px;
+}

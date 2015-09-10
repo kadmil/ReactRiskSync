@@ -1,0 +1,18 @@
+@import "./Utils/*.css";
+
+$radius: 5px;
+
+.assessment-short {
+  display: flex;
+  >div:first-child{
+    border-top-left-radius: $radius;
+    border-bottom-left-radius: $radius;
+  }
+  >div:last-child{
+    border-top-right-radius: $radius;
+    border-bottom-right-radius: $radius;
+  }
+  >div {
+    padding: 3px;
+  }
+}

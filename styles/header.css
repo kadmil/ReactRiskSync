@@ -1,0 +1,34 @@
+@import "./Utils/*.css";
+
+.header {
+  position: fixed;
+  width: 100%;
+  top:0;
+  padding: 15px;
+  transition: all 0.3s;
+  >div:first-child {
+    @mixin flex-center;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  >div:last-child {
+    min-height: 30px;
+  }
+  &.short>div:first-child {
+    display: none;
+  }
+  >div {
+    display: flex;
+    justify-content: space-between;
+    >div {
+      flex: 1;
+      @mixin flex-center;
+    }
+    >div:first-child{
+      display: flex;
+      >div:first-child{
+        margin-right: 10px;
+      }
+    }
+  }
+}
