@@ -2,7 +2,7 @@ import React from 'react'
 import style from '../../styles/header'
 import AssessmentShort from './assessment-short'
 import { StateSeverity } from '../Domain/state-severity'
-import { GetAssessmentScore } from '../Utils/get-assessment-score'
+import { GetAssessmentScore } from '../Utils'
 
 export default class Header extends React.Component {
   getInitialState() {

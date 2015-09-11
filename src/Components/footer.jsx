@@ -1,7 +1,7 @@
 import React from 'react'
 import style from '../../styles/footer'
 import { StateSeverity } from '../Domain/state-severity'
-import { GetAssessmentScore } from '../Utils/get-assessment-score'
+import { GetAssessmentScore } from '../Utils'
 
 export default class Footer extends React.Component {
   render() {

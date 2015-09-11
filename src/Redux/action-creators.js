@@ -1,12 +1,3 @@
-export const NEW_EVENT = 'NEW_EVENT'
-
-export function newEvent(eventData){
-  return {
-    type: NEW_EVENT,
-    eventData
-  }
-}
-
 export const SELECT_OPTION = 'SELECT_OPTION'
 
 export function selectOption(groupId, optionGroupId, optionId){
@@ -15,5 +6,15 @@ export function selectOption(groupId, optionGroupId, optionId){
     groupId,
     optionGroupId,
     optionId,
+  }
+}
+
+export const SYNC_DATA = 'SYNC_DATA'
+
+export function syncData(data){
+  return {
+    type: SYNC_DATA,
+    isSyncAction: true,
+    data
   }
 }

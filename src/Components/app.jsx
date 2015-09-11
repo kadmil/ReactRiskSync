@@ -14,6 +14,7 @@ import Recommendations from './recommendations'
 import Footer from './footer'
 
 import { selectOption } from '../Redux/action-creators'
+import { syncStore } from '../Sync'
 
 
 class DumbApp extends React.Component {
@@ -33,6 +34,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 const store = configureStore()
+
+syncStore(1, store)
 
 const App = connect(mapStateToProps, mapDispatchToProps)(DumbApp)
 
