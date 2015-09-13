@@ -1,6 +1,7 @@
 import React from 'react'
 import style from '../../styles/header'
 import AssessmentShort from './assessment-short'
+import PatientNumber from './patient-number'
 import { StateSeverity } from '../Domain/state-severity'
 import { GetAssessmentScore } from '../Utils'
 
@@ -31,7 +32,10 @@ export default class Header extends React.Component {
             { assessmentScore ? <AssessmentShort assessment = {this.props.assessment}/> : false }
           </div>
           <div>{`${stateName} состояние`}</div>
-          <div>{assessmentScore ? transportablity : false}</div>
+          <div>
+            <PatientNumber patientNumber={this.props.patientNumber} changePatientNumber={this.props.changePatientNumber}/>
+            <div>{assessmentScore ? transportablity : false}</div>
+          </div>
         </div>
       </header>)
   }

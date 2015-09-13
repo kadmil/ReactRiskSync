@@ -20,19 +20,20 @@ import { changeSyncId } from '../Sync'
 
 const DumbApp = (props) => (
   <div className='app'>
-    <Header assessment = {props.assessment}/>
+    <Header {...props}/>
     <Assessment {...props}/>
     <Recommendations assessment = {props.assessment}/>
     <Footer assessment = {props.assessment}/>
   </div>)
 
 function mapStateToProps(state) {
-  return state
+  return {...state, patientNumber: state.diffSync.syncId }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    selectOption: (...data) => dispatch(selectOption(...data))
+    selectOption: (...data) => dispatch(selectOption(...data)),
+    changePatientNumber: (newId) => dispatch(changeSyncId(newId))
   }
 }
 

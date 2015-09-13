@@ -1,0 +1,19 @@
+@import "./Utils/*.css";
+
+.patient-number {
+  margin-right: 30px;
+  >span {
+    margin-right: 15px;
+  }
+  >input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    font-size: 14px;
+    width: 100px;
+    &:focus{
+      outline: none;
+    }
+  }
+}
