@@ -5,9 +5,6 @@ import { StateSeverity } from '../Domain/state-severity'
 import { GetAssessmentScore } from '../Utils'
 
 export default class Header extends React.Component {
-  getInitialState() {
-    return { scrolledClass : ''}
-  }
 
   handleScroll = () => {
     this.setState({ scrolledClass : document.body.scrollTop > 50 ? 'short' : ''})

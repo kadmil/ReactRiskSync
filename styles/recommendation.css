@@ -1,0 +1,15 @@
+@import "./Utils/*.css";
+
+.recommendation {
+  min-width: 25%;
+  max-width: 30%;
+  flex: 1;
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: 1px solid;
+  >div:first-child {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 5px;
+  }
+}

@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom'
 import React from 'react'
 
 import { connect, Provider } from 'react-redux';
@@ -14,14 +15,16 @@ import Recommendations from './recommendations'
 import Footer from './footer'
 
 import { selectOption } from '../Redux/action-creators'
-import { syncStore } from '../Sync'
+import { changeSyncId } from '../Sync'
 
 
-class DumbApp extends React.Component {
-  render() {
-    return (<div className='app'><Header assessment = {this.props.assessment}/><Assessment {...this.props}/><Recommendations assessment = {this.props.assessment}/><Footer assessment = {this.props.assessment}/></div>)
-  }
-}
+const DumbApp = (props) => (
+  <div className='app'>
+    <Header assessment = {props.assessment}/>
+    <Assessment {...props}/>
+    <Recommendations assessment = {props.assessment}/>
+    <Footer assessment = {props.assessment}/>
+  </div>)
 
 function mapStateToProps(state) {
   return state
@@ -29,30 +32,24 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    selectOption: (...data)=>dispatch(selectOption(...data))
+    selectOption: (...data) => dispatch(selectOption(...data))
   }
 }
 
 const store = configureStore()
 
-syncStore(1, store)
+store.dispatch(changeSyncId(1))
 
 const App = connect(mapStateToProps, mapDispatchToProps)(DumbApp)
 
-class Root extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        {() =>
-          <App></App>
-        }
-      </Provider>
-    )
-  }
-}
+const Root = _ => (
+  <Provider store={store}>
+    <App/>
+  </Provider>
+)
 
 const appElement = document.getElementById('app')
 
-React.render(<Root/>, appElement)
+ReactDOM.render(<Root/>, appElement)
 
 export default App

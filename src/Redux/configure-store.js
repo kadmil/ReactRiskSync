@@ -1,9 +1,10 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import loggerMiddleware from 'redux-logger'
 import * as reducers from './reducers'
-import { stateSyncMiddleware } from '../Sync'
+import { diffSync, syncReducerWrapper, stateSyncMiddleware } from '../Sync'
 
-const reducer = combineReducers(reducers)
+const regularReducer = combineReducers({...reducers, diffSync})
+const reducer = syncReducerWrapper(regularReducer)
 const createStoreWithMiddleware = applyMiddleware(
   loggerMiddleware,
   stateSyncMiddleware
