@@ -1,42 +1,95 @@
 import { Client } from 'diffsync'
 import socket from 'socket.io-client'
+import cloneDeep from 'lodash.clonedeep'
 
-import { syncData } from '../Redux/action-creators'
+export const DATA_SYNCED = 'DATA_SYNCED'
 
-// pass the connection and the id of the data you want to synchronize
-const id = 1
-let data
-let client
+export function dataSynced(data){
+  return {
+    type: DATA_SYNCED,
+    isSyncAction: true,
+    data
+  }
+}
 
-export function syncStore(id, store){
-  client = new Client(socket('http://localhost:4000'), id)
+export const CHANGE_SYNC_ID = 'CHANGE_SYNC_ID'
 
-  const dispatch = () => store.dispatch(syncData(data))
+export function changeSyncId(newSyncId){
+  return {
+    type: CHANGE_SYNC_ID,
+    isSyncAction: true,
+    shouldChangeSyncClient: true,
+    newSyncId
+  }
+}
 
-  client.on('connected', () => {
-    // the initial data has been loaded,
-    // you can initialize your application
-    data = client.getData()
-    if (!data.assessment) {
-      Object.assign(data, store.getState())
-      client.sync()
+export const CHANGE_SYNC_CLIENT = 'CHANGE_SYNC_CLIENT'
+
+export function changeSyncClient(client) {
+  return {
+    type: CHANGE_SYNC_CLIENT,
+    isSyncAction: true,
+    client: client
+  }
+}
+
+//diffsync data reducer
+export function diffSync(state = {syncId: 0, clientReady: false}, action) {
+  switch(action.type) {
+    case CHANGE_SYNC_ID: {
+      return { ...state, syncId: action.newSyncId, clientReady: false }
     }
-    dispatch()
-  })
+    case CHANGE_SYNC_CLIENT: {
+      return { ...state, client: action.client, clientReady: true }
+    }
+  }
+  return state
+}
 
+export function syncReducerWrapper(reducer) {
+  return (state, action) => {
+    if (action.type === DATA_SYNCED) {
+      //there's a bug with immutability — need a deep clone of action.data
+      return {...cloneDeep(action.data), diffSync: state.diffSync}
+    }
+    return reducer(state, action)
+  }
+}
+
+const shouldSyncData = (action, state) => !action.isSyncAction && state.diffSync.clientReady
+const syncData = (state) => state.diffSync.client.sync({...state, diffSync: undefined})
+
+const shouldChangeClient = (action) => action.shouldChangeSyncClient
+const createClient = (id, store) => {
+  const client = new Client(socket('http://localhost:4000'), id)
+  client.on('connected', () => {
+    //init diffsync with initial state of our app
+    if (!Object.getOwnPropertyNames(client.getData()).length) {
+      client.sync({...store.getState(), diffSync: undefined})
+    }
+    store.dispatch(dataSynced(client.getData()))
+    store.dispatch(changeSyncClient(client))
+  })
   // an update from the server has been applied
   // you can perform the updates in your application now
-  client.on('synced', () => dispatch())
+  client.on('synced', ()=> store.dispatch(dataSynced(client.getData())))
 
   client.initialize()
+  return client
 }
+
 
 //middleware for synching
 export const stateSyncMiddleware = store => next => action => {
   const result = next(action)
-  if (data && !action.isSyncAction){
-    Object.assign(data, store.getState())
-    client.sync()
+  //sync part
+  if (shouldSyncData(action, store.getState())){
+    syncData(store.getState())
   }
+  //sync client change part
+  if (shouldChangeClient(action)) {
+    createClient(action.newSyncId, store)
+  }
+
   return result
 }
