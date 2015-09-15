@@ -1,6 +1,7 @@
 import { Client } from 'diffsync'
 import socket from 'socket.io-client'
 import cloneDeep from 'lodash.clonedeep'
+import debounce from 'lodash.debounce'
 
 export const DATA_SYNCED = 'DATA_SYNCED'
 
@@ -78,6 +79,7 @@ const createClient = (id, store) => {
   return client
 }
 
+const debouncedCreateClient = debounce(createClient, 500)
 
 //middleware for synching
 export const stateSyncMiddleware = store => next => action => {
@@ -88,7 +90,7 @@ export const stateSyncMiddleware = store => next => action => {
   }
   //sync client change part
   if (shouldChangeClient(action)) {
-    createClient(action.newSyncId, store)
+    debouncedCreateClient(action.newSyncId, store)
   }
 
   return result
