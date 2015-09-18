@@ -119,6 +119,7 @@ fi
 
 # 4. Run grunt
 if [ -e "$DEPLOYMENT_SOURCE/webpack.config.js" ]; then
+  cd "$DEPLOYMENT_TARGET"
   ./node_modules/.bin/webpack
   exitWithMessageOnError "webpack failed"
 fi
