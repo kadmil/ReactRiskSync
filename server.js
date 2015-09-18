@@ -14,6 +14,6 @@ var dataAdapter = new DiffSync.InMemoryDataAdapter()
 var diffSyncServer = new DiffSync.Server(dataAdapter, io)
 
 // starting the http server
-http.listen(4000, function(){
+http.listen(process.env.PORT || 4000, function(){
   console.log('ready to go')
 })
