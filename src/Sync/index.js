@@ -58,30 +58,19 @@ export function syncReducerWrapper(reducer) {
 }
 
 const shouldSyncData = (action, state) => !action.isSyncAction && state.diffSync.clientReady
-const syncData = (state) => state.diffSync.client.sync({...state, diffSync: undefined})
+const syncData = (state) => {
+  Object.assign(state.diffSync.client.getData(), {...state, diffSync: undefined})
+  state.diffSync.client.sync()
+}
 
 const shouldChangeClient = (action) => action.shouldChangeSyncClient
 const createClient = (id, store) => {
-  const clientSocket = socket('')
-  clientSocket.on('connect', ()=>{
-    console.log(`I'm socket and I'm connected to server`)
-  })
-  clientSocket.on('error', (error)=>{
-    console.log(`I'm socket and I've got problems`)
-    console.log(error)
-  })
-  clientSocket.on('disconnect', ()=>{
-    console.log(`I'm socket and I'm disconnected to server`)
-  })
-  clientSocket.on('reconnect', (num)=>{
-    console.log(`I'm socket and I'm reconnected to server after ${num} attempts`)
-  })
   const client = new Client(socket(''), id)
   client.on('connected', () => {
-    console.log(`I'm connected to server via websocket!`)
     //init diffsync with initial state of our app
     if (!Object.getOwnPropertyNames(client.getData()).length) {
-      client.sync({...store.getState(), diffSync: undefined})
+      Object.assign(client.getData(), {...store.getState(), diffSync: undefined})
+      client.sync()
     }
     store.dispatch(dataSynced(client.getData()))
     store.dispatch(changeSyncClient(client))
