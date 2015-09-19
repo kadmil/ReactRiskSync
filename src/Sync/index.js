@@ -62,7 +62,7 @@ const syncData = (state) => state.diffSync.client.sync({...state, diffSync: unde
 
 const shouldChangeClient = (action) => action.shouldChangeSyncClient
 const createClient = (id, store) => {
-  const client = new Client(socket('http://localhost:4000'), id)
+  const client = new Client(socket(''), id)
   client.on('connected', () => {
     //init diffsync with initial state of our app
     if (!Object.getOwnPropertyNames(client.getData()).length) {
