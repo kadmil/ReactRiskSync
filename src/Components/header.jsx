@@ -3,7 +3,7 @@ import style from '../../styles/header'
 import AssessmentShort from './assessment-short'
 import PatientNumber from './patient-number'
 import { StateSeverity } from '../Domain/state-severity'
-import { GetAssessmentScore } from '../Utils'
+import { GetAssessmentScore, Pluralize } from '../Utils'
 
 export default class Header extends React.Component {
 
@@ -25,10 +25,10 @@ export default class Header extends React.Component {
     const transportablity = StateSeverity[assessmentScore].transportState
     const stateClassName = StateSeverity[assessmentScore].className
     return (<header className={`header ${stateClassName} ${this.state ? this.state.scrolledClass : ''}`}>
-        <div>Клиническая Шкала Оценки Недоношенных Новорожденных</div>
+        <div className='title'><div className='wide'>Клиническая Шкала Оценки Недоношенных Новорожденных</div><div className='narrow'>КШОНН</div></div>
         <div>
           <div>
-            <div>Баллы по КШОНН: {assessmentScore}</div>
+            <div>{`${assessmentScore} ${Pluralize('балл', 'балла', 'баллов', assessmentScore)}`}</div>
             { assessmentScore ? <AssessmentShort assessment = {this.props.assessment}/> : false }
           </div>
           <div>{`${stateName} состояние`}</div>

@@ -3,10 +3,14 @@
 .recommendation {
   min-width: 25%;
   max-width: 30%;
+  @media (max-width: 768px) {
+    min-width: 100%;
+  }
   flex: 1;
   padding: 6px 12px;
   border-radius: 5px;
   border: 1px solid;
+  @mixin styled-colors;
   >div:first-child {
     font-weight: bold;
     text-decoration: underline;

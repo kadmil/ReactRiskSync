@@ -1,7 +1,7 @@
 @import "./Utils/*.css";
 
 .assessment-group {
-  display: flex;
+  @mixin wide-flex;
   font-size: 16px;
   .assessment-group-label {
     padding: 6px 12px;

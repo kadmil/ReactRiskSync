@@ -6,10 +6,22 @@
   top:0;
   padding: 15px;
   transition: all 0.3s;
-  >div:first-child {
-    @mixin flex-center;
+  @mixin styled-colors;
+  .title {
     font-size: 1.5em;
     margin-bottom: 10px;
+    .narrow {
+      display: none;
+      @media (max-width: 768px) {
+        @mixin flex-center;
+      }
+    }
+    .wide {
+      @mixin flex-center;
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
   }
   >div:last-child {
     min-height: 30px;
@@ -18,14 +30,13 @@
     display: none;
   }
   >div {
-    display: flex;
+    @mixin wide-flex;
     justify-content: space-between;
     >div {
       flex: 1;
       @mixin flex-center;
     }
     >div:first-child{
-      display: flex;
       >div:first-child{
         margin-right: 10px;
       }

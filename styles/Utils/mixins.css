@@ -1,21 +1,79 @@
 @define-mixin flex-column {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @define-mixin flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @define-mixin main-flex {
-    display: flex;
-    flex: 1;
+  display: flex;
+  flex: 1;
 }
 
 @define-mixin main-flex-column {
-    @mixin main-flex;
-    flex-direction: column;
+  @mixin main-flex;
+  flex-direction: column;
+}
+
+@define-mixin wide-flex {
+  display: flex;
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+@define-mixin styled-colors {
+  &.info {
+    color: white;
+    background-color: $info-color;
+  }
+  &.primary {
+    color: white;
+    background-color: $primary-color;
+  }
+  &.warning {
+    color: white;
+    background-color: $warning-main-color;
+    border-color: $warning-main-border-color;
+  }
+  &.massive-warning {
+    color: white;
+    background-color: $warning-active-color;
+  }
+  &.massive-danger {
+    color: white;
+    background-color: $danger-active-color;
+  }
+  &.success {
+    color: white;
+    background-color: $success-main-color;
+    border-color: $success-border-main-color;
+  }
+  &.danger {
+    color: white;
+    background-color: $danger-main-color;
+    border-color: $danger-main-border-color;
+  }
+}
+
+@define-mixin active-styled-colors {
+  &.active, &:hover {
+    &.warning {
+     background-color: $warning-active-color;
+      border-color: $warning-active-border-color;
+    }
+    &.success {
+      background-color: $success-active-color;
+      border-color: $success-border-active-color;
+    }
+    &.danger {
+      background-color: $danger-active-color;
+      border-color: $danger-active-border-color;
+    }
+  }
 }

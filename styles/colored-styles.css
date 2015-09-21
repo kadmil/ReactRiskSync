@@ -8,52 +8,10 @@
     cursor: pointer;
     text-align: center;
     padding: 6px 12px;
+    @mixin styled-colors;
+    @mixin active-styled-colors;
     &.active {
         box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
     }
     transition: all 0.3s;
-}
-
-.info {
-    color: white;
-    background-color: $info-color;
-}
-.primary {
-    color: white;
-    background-color: $primary-color;
-}
-.warning {
-    color: white;
-    background-color: $warning-main-color;
-    border-color: $warning-main-border-color;
-    &.button.active, &.button:hover {
-        background-color: $warning-active-color;
-        border-color: $warning-active-border-color;
-    }
-}
-.massive-warning {
-    color: white;
-    background-color: $warning-active-color;
-}
-.massive-danger {
-    color: white;
-    background-color: $danger-active-color;
-}
-.success {
-    color: white;
-    background-color: $success-main-color;
-    border-color: $success-border-main-color;
-    &.button.active, &.button:hover {
-        background-color: $success-active-color;
-        border-color: $success-border-active-color;
-    }
-}
-.danger {
-    color: white;
-    background-color: $danger-main-color;
-    border-color: $danger-main-border-color;
-    &.button.active, &.button:hover {
-        background-color: $danger-active-color;
-        border-color: $danger-active-border-color;
-    }
 }
