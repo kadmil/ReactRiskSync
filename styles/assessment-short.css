@@ -15,4 +15,7 @@ $radius: 5px;
   >div {
     padding: 3px;
   }
+  .short {
+    @mixin styled-colors;
+  }
 }
