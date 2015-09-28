@@ -5,7 +5,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.json', '.jsx', '.css']
   },
-  entry: [
+  entry: process.env.PROD ? ['./src/Components/app'] : [
       'webpack-dev-server/client?http://localhost:8080', // WebpackDevServer host and port
       'webpack/hot/only-dev-server',
       './src/Components/app' // Your appʼs entry point
