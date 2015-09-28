@@ -5,10 +5,11 @@ import debounce from 'lodash.debounce'
 
 export const DATA_SYNCED = 'DATA_SYNCED'
 
-export function dataSynced(data){
+export function dataSynced(data, updated){
   return {
     type: DATA_SYNCED,
     isSyncAction: true,
+    updated: updated || Date.now(),
     data
   }
 }
@@ -35,7 +36,7 @@ export function changeSyncClient(client) {
 }
 
 //diffsync data reducer
-export function diffSync(state = {syncId: 0, clientReady: false}, action) {
+export function diffSync(state = {syncId: 0, clientReady: false, updated: Date.now()}, action) {
   switch(action.type) {
     case CHANGE_SYNC_ID: {
       return { ...state, syncId: action.newSyncId, clientReady: false }
@@ -51,7 +52,7 @@ export function syncReducerWrapper(reducer) {
   return (state, action) => {
     if (action.type === DATA_SYNCED) {
       //there's a bug with immutability — need a deep clone of action.data
-      return {...cloneDeep(action.data), diffSync: state.diffSync}
+      return {...cloneDeep(action.data), diffSync: {...state.diffSync, updated: action.updated}}
     }
     return reducer(state, action)
   }

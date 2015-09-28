@@ -11,7 +11,6 @@ import index from '../../index.html'
 
 import Header from './header'
 import Assessment from './assessment'
-import OnAir from './on-air'
 import Recommendations from './recommendations'
 import Footer from './footer'
 
@@ -24,12 +23,11 @@ const DumbApp = (props) => (
     <Header {...props}/>
     <Assessment {...props}/>
     <Recommendations assessment = {props.assessment}/>
-    <OnAir onAir={props.onAir}/>
-    <Footer assessment = {props.assessment}/>
+    <Footer {...props}/>
   </div>)
 
 function mapStateToProps(state) {
-  return {...state, patientNumber: state.diffSync.syncId, onAir: state.diffSync.clientReady }
+  return {...state, patientNumber: state.diffSync.syncId, onAir: state.diffSync.clientReady, updated: state.diffSync.updated }
 }
 
 function mapDispatchToProps(dispatch) {
